@@ -6,7 +6,7 @@ import '../utils/utils.dart';
 class PortScanner {
   static Stream<NetworkAddress> discover(
     String subnet,
-    int port, {
+    int port, List<int> hostIds,{
     required Duration timeout,
   }) {
     if (port < 1 || port > 65535) {
@@ -15,7 +15,7 @@ class PortScanner {
     final out = StreamController<NetworkAddress>();
     final futures = <Future<Socket>>[];
 
-    for (int i = 1; i < 256; ++i) {
+    for (final int i in hostIds) {
       final host = '$subnet.$i';
       final Future<Socket> socket = Utils.getPortFromPing(host, port, timeout);
       futures.add(socket);

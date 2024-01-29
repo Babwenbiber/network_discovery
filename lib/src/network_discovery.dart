@@ -14,17 +14,16 @@ class NetworkDiscovery {
     bool resultsInAddressAscendingOrder = true,
   }) {
     return HostScanner.discoverAllPingableDevices(subnet,
-        hostIds: hostIds,
-        timeout: timeout,
-        resultsInAddressAscendingOrder: resultsInAddressAscendingOrder);
+        hostIds: hostIds, timeout: timeout, resultsInAddressAscendingOrder: resultsInAddressAscendingOrder);
   }
 
   static Stream<NetworkAddress> discover(
     String subnet,
     int port, {
+    List<int> hostIds = const [1, 255],
     Duration timeout = const Duration(seconds: 2),
   }) {
-    return PortScanner.discover(subnet, port, timeout: timeout);
+    return PortScanner.discover(subnet, port, hostIds, timeout: timeout);
   }
 
   static Stream<NetworkAddress> discoverMultiplePorts(
@@ -48,7 +47,6 @@ class NetworkDiscovery {
     List<int> ports, {
     Duration timeout = const Duration(seconds: 2),
   }) {
-    return PortScanner.discoverFromAddressMultiplePorts(address, ports,
-        timeout: timeout);
+    return PortScanner.discoverFromAddressMultiplePorts(address, ports, timeout: timeout);
   }
 }
